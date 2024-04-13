@@ -10,7 +10,6 @@ const comments = [
 const Comment = () => {
   return (
     <div className="comments">
-      <h2>{username}'s comments</h2>
       <table>
         <thead>
           <tr>
