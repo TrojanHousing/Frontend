@@ -14,11 +14,6 @@ const Navbar = () => {
         <li>
           <Link to="/UserProfile">User Profile</Link>
         </li>
-
-        {/* This is for testing only!! We will not have a separate comment page */}
-        <li>
-          <Link to="/Comment">Comment</Link>
-        </li>
       </ul>
     </nav>
   );

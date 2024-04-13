@@ -1,7 +1,6 @@
 import React from 'react';
 import './PropertyGrid.css';
 
-const username = "sample@usc.edu"; // Username for all properties
 
 // Sample properties data, pull with SQL 
 const properties = [
@@ -36,5 +35,5 @@ return (
     </div>
 );
 };
-
+  
 export default PropertyGrid;
