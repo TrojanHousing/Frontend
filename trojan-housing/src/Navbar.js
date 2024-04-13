@@ -12,7 +12,12 @@ const Navbar = () => {
           <Link to="/SignUp">Sign Up</Link>
         </li>
         <li>
-          <Link to="/userProfile">User Profile</Link>
+          <Link to="/UserProfile">User Profile</Link>
+        </li>
+
+        {/* This is for testing only!! We will not have a separate comment page */}
+        <li>
+          <Link to="/Comment">Comment</Link>
         </li>
       </ul>
     </nav>
