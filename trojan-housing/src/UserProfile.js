@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Comments from './Comment';
 
 // Sample properties data
 const properties = [
@@ -23,42 +23,6 @@ const properties = [
   }
 ];
 
-// Sample comments data with ratings
-const comments = [
-  {
-    property: 'Park Wilshire',
-    date: '27/07/2017',
-    rating: 4.5,
-    review: 'Great location with a stunning view!'
-  },
-  {
-    property: 'Violet on Virgil',
-    date: '27/07/2017',
-    rating: 4.0,
-    review: 'Modern amenities and friendly staff.'
-  },
-  {
-    property: 'Broadway Palace',
-    date: '24/07/2017',
-    rating: 3.5,
-    review: 'Good value for the price, but noisy at night.'
-  }
-];
-
-// Rating component to display stars
-const Rating = ({ value }) => {
-  const fullStars = Math.floor(value);
-  const halfStar = value % 1 !== 0;
-  const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-  return (
-    <div className="rating">
-      {'★'.repeat(fullStars)}
-      {halfStar && '½'}
-      {'☆'.repeat(emptyStars)}
-    </div>
-  );
-};
-
 function UserProfile() {
   return (
     <div className="user-profile">
@@ -80,17 +44,7 @@ function UserProfile() {
         </div>
       </div>
       <div className="user-comments">
-        <h2>Comments</h2>
-        {comments.map((comment, index) => (
-          <div className="comment" key={index}>
-            <h4>{comment.property}</h4>
-            <div className="comment-body">
-              <Rating value={comment.rating} />
-              <p className="comment-date">{comment.date}</p>
-              <p className="comment-text">{comment.review}</p>
-            </div>
-          </div>
-        ))}
+        <Comments />
       </div>
     </div>
   );
