@@ -1,18 +1,36 @@
-# Getting Started with Create React App
+# Run React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Check Downloads
 
-## Available Scripts
+Run `npm -v` and `node -v` to confirm.\
+If they are not found, download whichever are missing. 
 
-In the project directory, you can run:
+## Run Project
 
-### `npm start`
+Clone the project: `git clone <repository URL>`
 
-Runs the app in the development mode.\
+Install dependencies: `npm install` and `npm install react-router-dom@latest`
+
+In the project directory, run: `npm start`
+
+This will run the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
-You may also see any lint errors in the console.
+You may also see any lint errors in the console.\
+You do not need to restart the server after changes are made to files.
+
+## Development
+
+Checkout a git branch using `git checkout -b <branch name>`. Either your own name or whatever feature you are working on is fine for the branch name.
+
+Commit changes to this branch until they are ready to be merged with the main development branch.
+
+**Make sure to `git pull` before `git push`. There should not be any conflicts if you are working on your own branch.**
+
+---
+
+# Ignore everything else (below) for now
 
 ### `npm test`
 
