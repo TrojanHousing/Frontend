@@ -1,0 +1,28 @@
+.property-comment {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.comment-date {
+  color: #888;
+}
+
+.comment-rating {
+  margin-bottom: 10px;
+}
+
+.comment-text {
+  line-height: 1.5;
+}

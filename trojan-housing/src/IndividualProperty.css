@@ -1,0 +1,35 @@
+.individual-property {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.property-details {
+  margin-bottom: 20px;
+}
+
+.property-images {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 10px;
+  margin-bottom: 20px;
+}
+
+.property-images img {
+  width: 100%;
+  height: auto;
+}
+
+.property-info {
+  margin-bottom: 20px;
+}
+
+.property-specs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.property-comments {
+  margin-top: 40px;
+}
