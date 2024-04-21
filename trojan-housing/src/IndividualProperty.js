@@ -8,6 +8,9 @@ import property1 from './images/property1.jpg';
 import property2 from './images/property2.jpg';
 import property3 from './images/property3.jpg';
 import property4 from './images/property4.jpg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBed, faBath, faRulerCombined } from '@fortawesome/free-solid-svg-icons'
+
 
 
 const IndividualProperty = () => {
@@ -54,13 +57,13 @@ const IndividualProperty = () => {
     },
     {
       username: 'Jeff. H',
-      date: '2023-05-20',
+      date: '2024-01-16',
       rating: '★☆☆☆☆',
       text: 'The landlord is terrible. This is the absolute worst place I have ever had the misfortune of living in.',
     },
     {
       username: 'Trojan T.',
-      date: '2023-05-20',
+      date: '2023-09-29',
       rating: '★★★☆☆',
       text: 'It is ok, but the price is too high for what you get.',
     },
@@ -91,12 +94,22 @@ const IndividualProperty = () => {
       </div>
       <div className="property-details">
         <div className="property-info">
+          <h2>Trojan Apartments</h2>
           <p>Price: {property.price}</p>
           <p>Address: {property.address}</p>
           <div className="property-specs">
-            <p>{property.beds} Beds</p>
-            <p>{property.baths} Baths</p>
-            <p>{property.sqft} sqft</p>
+            <div className="property-spec">
+              <FontAwesomeIcon icon={faBed} style={{ color: "#990000", }} />
+              <p>{property.beds} Beds</p>
+            </div>
+            <div className="property-spec">
+              <FontAwesomeIcon icon={faBath} style={{ color: "#990000", }} />
+              <p>{property.baths} Baths</p>
+            </div>
+            <div className="property-spec">
+              <FontAwesomeIcon icon={faRulerCombined} style={{ color: "#990000", }} />
+              <p>{property.sqft} sqft</p>
+            </div>
           </div>
           <p>Details: {property.description}</p>
         </div>

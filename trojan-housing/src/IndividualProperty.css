@@ -14,11 +14,19 @@
 
 .save-button {
   padding: 10px 20px;
-  background-color: #f5f5f5;
+  background-color: #FFCC00;
+  /* USC Gold */
+  color: #FFFFFF;
   border: none;
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.save-button:hover {
+  background-color: #FFC72C;
+  /* lighter shade on hover */
 }
 
 
@@ -29,9 +37,12 @@
 }
 
 .property-info {
+  margin-top: 20px;
+
   background-color: #f5f5f5;
   padding: 20px;
   border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .property-specs {
@@ -40,10 +51,18 @@
   margin-bottom: 10px;
 }
 
+.property-spec {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
 .property-comments {
+  margin-top: 20px;
   background-color: #f5f5f5;
   padding: 20px;
   border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -54,10 +73,12 @@
   justify-content: space-between;
   align-items: center;
   margin: 10px;
-  border: 2px solid #ccc;
+  border: 2px solid #990000;
   padding: 10px;
   gap: 10px;
   position: relative;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .property-images img {
@@ -68,21 +89,29 @@
   /* Fixed height for each image for now*/
   border-radius: 10px;
   /* Rounded edges for the images */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
+
+.property-images img:hover {
+  transform: scale(1.05);
+}
+
 
 .toggle-button {
   position: absolute;
   bottom: 10px;
   right: 10px;
   padding: 10px 20px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #990000;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   z-index: 10;
+  transition: background-color 0.3s ease;
 }
 
 .toggle-button:hover {
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: #CC0000;
 }
