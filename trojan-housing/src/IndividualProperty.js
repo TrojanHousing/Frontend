@@ -7,6 +7,7 @@ import './IndividualProperty.css';
 import property1 from './images/property1.jpg';
 import property2 from './images/property2.jpg';
 import property3 from './images/property3.jpg';
+import property4 from './images/property4.jpg';
 
 
 const IndividualProperty = () => {
@@ -18,6 +19,12 @@ const IndividualProperty = () => {
     setIsSaved(!isSaved);
   };
 
+  const [expandImages, setExpandImages] = useState(false); // new state for toggling image display
+
+  const toggleImages = () => {
+    setExpandImages(!expandImages);
+  };
+
   //sample property data (replace with actual data from the backend)
   const property = {
     id: 1,
@@ -26,6 +33,7 @@ const IndividualProperty = () => {
       { url: property1 },
       { url: property2 },
       { url: property3 },
+      { url: property4 },
     ],
     price: '$2500/month',
     description: 'A luxurious apartment with modern amenities.',
@@ -39,42 +47,49 @@ const IndividualProperty = () => {
   //examples of comments
   const propertyComments = [
     {
-      username: 'user1',
+      username: 'Annie. P',
       date: '2023-05-20',
       rating: '★★★★☆',
       text: 'Great property with amazing amenities!',
     },
     {
-      username: 'user1',
+      username: 'Jeff. H',
       date: '2023-05-20',
-      rating: '★★★★☆',
-      text: 'Great property with amazing amenities!',
+      rating: '★☆☆☆☆',
+      text: 'The landlord is terrible. This is the absolute worst place I have ever had the misfortune of living in.',
     },
     {
-      username: 'user1',
+      username: 'Trojan T.',
       date: '2023-05-20',
-      rating: '★★★★☆',
-      text: 'Great property with amazing amenities!',
+      rating: '★★★☆☆',
+      text: 'It is ok, but the price is too high for what you get.',
     },
 
   ];
+
+  const visibleImages = expandImages ? property.images : property.images.slice(0, 3);
 
 
   return (
     <div className="individual-property">
       <div className="navigation-bar">
         {/* nav bar */}
-        <button onClick={handleSaveProperty}>
+      </div>
+      <div className="property-header">
+        <h1>{property.name}</h1>
+        <button className="save-button" onClick={handleSaveProperty}>
           {isSaved ? 'Unsave' : 'Save'}
         </button>
       </div>
+      <div className="property-images">
+        {visibleImages.map((image, index) => (
+          <img key={index} src={image.url} alt={`Property Image ${index + 1}`} />
+        ))}
+        <button className="toggle-button" onClick={toggleImages}>
+          {expandImages ? 'Show Less' : 'Show More'}
+        </button>
+      </div>
       <div className="property-details">
-        <h1>{property.name}</h1>
-        <div className="property-images">
-          {property.images.map((image, index) => (
-            <img key={index} src={image.url} alt={`Property Image ${index + 1}`} />
-          ))}
-        </div>
         <div className="property-info">
           <p>Price: {property.price}</p>
           <p>Address: {property.address}</p>
@@ -85,14 +100,14 @@ const IndividualProperty = () => {
           </div>
           <p>Details: {property.description}</p>
         </div>
+        <div className="property-comments">
+          <h2>Comments</h2>
+          {propertyComments.map((comment, index) => (
+            <PropertyComment key={index} comment={comment} />
+          ))}
+        </div>
       </div>
-      <div className="property-comments">
-        <h2>Comments</h2>
-        {propertyComments.map((comment, index) => (
-          <PropertyComment key={index} comment={comment} />
-        ))}
-      </div>
-    </div>
+    </div >
   );
 };
 

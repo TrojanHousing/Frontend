@@ -1,25 +1,24 @@
 .property-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    grid-gap: 20px;
-  }
-  
-  .property-item {
-    border: 1px solid #ccc;
-    padding: 10px;
-  }
-  
-  .property-item a {
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  .address {
-    font-weight: bold;
-  }
-  
-  .price-range {
-    margin-top: 5px;
-    font-size: 0.9em;
-  }
-  
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 20px;
+}
+
+.property-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.property-item a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.address {
+  font-weight: bold;
+}
+
+.price-range {
+  margin-top: 5px;
+  font-size: 0.9em;
+}

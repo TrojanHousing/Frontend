@@ -2,6 +2,8 @@ import React from 'react';
 import Comments from './Comment';
 import SavedProperties from './SavedProperties';
 
+
+
 const username = "sample@usc.edu"; // Username for all properties
 
 function UserProfile() {

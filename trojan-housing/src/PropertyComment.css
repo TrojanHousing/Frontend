@@ -1,28 +1,40 @@
+.property-comments {
+  margin-top: 40px;
+}
+
 .property-comment {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
 }
 
 .comment-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 10px;
 }
 
+
 .username {
   font-weight: bold;
+  color: #333;
 }
 
 .comment-date {
   color: #888;
+  font-size: 14px;
 }
 
 .comment-rating {
   margin-bottom: 10px;
+  color: #f8b500;
+  font-size: 18px;
 }
 
 .comment-text {
   line-height: 1.5;
+  color: #555;
 }
