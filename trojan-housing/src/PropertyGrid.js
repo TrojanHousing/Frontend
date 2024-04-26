@@ -11,14 +11,15 @@ const properties = [
 const PropertyGrid = ({ searchTerm, filters }) => {
     const filteredProperties = properties.filter(property => {
         return property.address.toLowerCase().includes(searchTerm) &&
-               (!filters.type || property.type === filters.type);
+            (!filters.type || property.type === filters.type);
     });
 
     return (
         <div className="property-grid">
             {filteredProperties.map((property) => (
                 <div className="property-item" key={property.id}>
-                    <Link to={`/IndividualProperty/${property.id}`}>
+                    {/*<Link to={`/IndividualProperty/${property.id}`}>*/}
+                    <Link to={`/IndividualProperty`}>
                         <img src={property.image} alt={`View ${property.address}`} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
                         <div className="address">{property.address}</div>
                         <div className="price-range">{property.priceRange}</div>
