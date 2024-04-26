@@ -1,5 +1,6 @@
 import React from 'react';
-
+import './Comment.css';
+import { Link } from 'react-router-dom';
 
 const username = "sample@usc.edu"; // Username for all comments
 
@@ -23,7 +24,11 @@ const Comment = () => {
         <tbody>
           {comments.map((comment, index) => (
             <tr key={index}>
-              <td>{comment.address}</td>
+              <td>
+                <Link to={`/IndividualProperty`}>
+                  {comment.address}
+                </Link>
+              </td>
               <td>{comment.date}</td>
               <td>{comment.rating}</td>
               <td>{comment.review}</td>
