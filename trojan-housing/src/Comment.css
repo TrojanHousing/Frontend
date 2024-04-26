@@ -1,0 +1,26 @@
+.comments {
+  width: 100%; /* Set table width to 100% */
+  border-collapse: collapse; /* Remove default table cell spacing */
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+}
+.comments th,
+.comments td {
+  padding: 0.5rem 1rem; /* Add padding for content */
+  border: 1px solid #ddd; /* Add table borders */
+  text-align: left; /* Align text to the left */
+}
+
+.comments thead th {
+  background-color: #f2f2f2; /* Set header background color */
+  font-weight: bold; /* Make header text bold */
+}
+.comments tbody tr:hover td:first-child {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+.comments tbody tr td a {
+  text-decoration: none;
+  color: rgb(113, 11, 11);
+  font-weight: bold; 
+}

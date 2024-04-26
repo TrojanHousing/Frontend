@@ -1,0 +1,42 @@
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: -60px;
+}
+
+.user-profile-block {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    margin-left: 250px;
+    height: 20vh;
+    /* Full height of the viewport */
+    width: 100vw;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+
+}
+
+.saved-properties,
+.user-comments {
+    justify-content: center;
+    align-items: center;
+    max-width: 70%;
+    margin-top: 50px;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.interactions {
+    justify-content: center;
+    align-items: center;
+}

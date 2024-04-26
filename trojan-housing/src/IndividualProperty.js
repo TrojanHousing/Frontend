@@ -1,6 +1,6 @@
 
 //individualProperty.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Comments from './Comment';
 import Navbar from './Navbar';
 import PropertyComment from './PropertyComment';
@@ -17,17 +17,21 @@ import { faBed, faBath, faRulerCombined } from '@fortawesome/free-solid-svg-icon
 const IndividualProperty = () => {
   const [isSaved, setIsSaved] = useState(false);
   const username = "sample@usc.edu"; // Username for all properties
+  const [expandImages, setExpandImages] = useState(false); // new state for toggling image display
+  const [visibleImages, setVisibleImages] = useState([]);
+
+
 
   const handleSaveProperty = () => {
     //update isSaved state when the user clicks the "Save" button
     setIsSaved(!isSaved);
   };
 
-  const [expandImages, setExpandImages] = useState(false); // new state for toggling image display
-
   const toggleImages = () => {
     setExpandImages(!expandImages);
   };
+
+
 
   //sample property data (replace with actual data from the backend)
   const property = {
@@ -71,57 +75,81 @@ const IndividualProperty = () => {
 
   ];
 
-  const visibleImages = expandImages ? property.images : property.images.slice(0, 3);
+  useEffect(() => {
+    const updateVisibleImages = () => {
+      const pageWidth = window.innerWidth;
+      const imageWidth = 430;
+      const imageHeight = 275;
+      const maxImages = Math.floor(pageWidth / imageWidth);
+
+      const newVisibleImages = expandImages
+        ? property.images
+        : property.images.slice(0, maxImages);
+      setVisibleImages(newVisibleImages);
+    };
+
+    updateVisibleImages();
+    window.addEventListener('resize', updateVisibleImages);
+
+    return () => {
+      window.removeEventListener('resize', updateVisibleImages);
+    };
+  }, [property.images, expandImages]);
+
 
 
   return (
-    <div className="individual-property">
-      <div className="navigation-bar">
-        {/* nav bar */}
+    <div>
+      <div className="navbar-div">
+        <Navbar />
       </div>
-      <div className="property-header">
-        <h1>{property.name}</h1>
-        <button className="save-button" onClick={handleSaveProperty}>
-          {isSaved ? 'Unsave' : 'Save'}
-        </button>
-      </div>
-      <div className="property-images">
-        {visibleImages.map((image, index) => (
-          <img key={index} src={image.url} alt={`Property Image ${index + 1}`} />
-        ))}
-        <button className="toggle-button" onClick={toggleImages}>
-          {expandImages ? 'Show Less' : 'Show More'}
-        </button>
-      </div>
-      <div className="property-details">
-        <div className="property-info">
-          <h2>Trojan Apartments</h2>
-          <p>Price: {property.price}</p>
-          <p>Address: {property.address}</p>
-          <div className="property-specs">
-            <div className="property-spec">
-              <FontAwesomeIcon icon={faBed} style={{ color: "#990000", }} />
-              <p>{property.beds} Beds</p>
-            </div>
-            <div className="property-spec">
-              <FontAwesomeIcon icon={faBath} style={{ color: "#990000", }} />
-              <p>{property.baths} Baths</p>
-            </div>
-            <div className="property-spec">
-              <FontAwesomeIcon icon={faRulerCombined} style={{ color: "#990000", }} />
-              <p>{property.sqft} sqft</p>
-            </div>
-          </div>
-          <p>Details: {property.description}</p>
+      <div className="individual-property">
+        <div className="property-header">
+          <h1>{property.name}</h1>
+          <button className="save-button" onClick={handleSaveProperty}>
+            {isSaved ? 'Unsave' : 'Save'}
+          </button>
         </div>
-        <div className="property-comments">
-          <h2>Comments</h2>
-          {propertyComments.map((comment, index) => (
-            <PropertyComment key={index} comment={comment} />
+        <div className="property-images">
+          {visibleImages.map((image, index) => (
+            <img key={index} src={image.url} alt={`Property Image ${index + 1}`} />
           ))}
+          {property.images.length > visibleImages.length && (
+            <button className="toggle-button" onClick={toggleImages}>
+              {expandImages ? 'Show Less' : 'Show More'}
+            </button>
+          )}
         </div>
-      </div>
-    </div >
+        <div className="property-details">
+          <div className="property-info">
+            <h2>Trojan Apartments</h2>
+            <p>Price: {property.price}</p>
+            <p>Address: {property.address}</p>
+            <div className="property-specs">
+              <div className="property-spec">
+                <FontAwesomeIcon icon={faBed} style={{ color: "#990000", }} />
+                <p>{property.beds} Beds</p>
+              </div>
+              <div className="property-spec">
+                <FontAwesomeIcon icon={faBath} style={{ color: "#990000", }} />
+                <p>{property.baths} Baths</p>
+              </div>
+              <div className="property-spec">
+                <FontAwesomeIcon icon={faRulerCombined} style={{ color: "#990000", }} />
+                <p>{property.sqft} sqft</p>
+              </div>
+            </div>
+            <p>Details: {property.description}</p>
+          </div>
+          <div className="property-comments">
+            <h2>Comments</h2>
+            {propertyComments.map((comment, index) => (
+              <PropertyComment key={index} comment={comment} />
+            ))}
+          </div>
+        </div>
+      </div >
+    </div>
   );
 };
 

@@ -1,8 +1,11 @@
 /* IndividualProperty.css */
+.navbar-div {}
+
 .individual-property {
-  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  font-family: Arial, sans-serif;
+  color: #990000;
 }
 
 .property-header {
@@ -84,11 +87,10 @@
 .property-images img {
 
   object-fit: cover;
-  height: 250px;
-  width: 377px;
-  /* Fixed height for each image for now*/
+  height: 275px;
+  width: 430px;
+  /* fixed height for each image for now*/
   border-radius: 10px;
-  /* Rounded edges for the images */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
 }
