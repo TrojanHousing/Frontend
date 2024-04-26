@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { useAuth } from './AuthenticationState'; // Import useAuth hook
 import Navbar from './Navbar';
-import './SignIn.css';  // Reusing the same CSS file for styling
-
+import './SignIn.css';  
 
 const SignUp = () => {
+  const { signUp } = useAuth();  // Access signUp method
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -47,7 +48,7 @@ const SignUp = () => {
     }
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
-      console.log('Form submitted:', formData);
+      signUp(formData);  // Call signUp on successful validation
     }
   };
 
@@ -55,7 +56,7 @@ const SignUp = () => {
     <div id="2">
       <Navbar />
       <div className="container">
-        <div className="form-container" style={{marginTop: '-400px'}}>
+        <div className="form-container">
           <h2>Sign Up</h2>
           <form onSubmit={handleSubmit} className="form">
             <div>
