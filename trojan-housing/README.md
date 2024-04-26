@@ -9,7 +9,7 @@ If they are not found, download whichever are missing.
 
 Clone the project: `git clone <repository URL>`
 
-Install dependencies: `npm install` and `npm install react-router-dom@latest`
+Install dependencies: `npm install` and `npm install react-router-dom@latest`. For good measure, use `npm update` after this. 
 
 In the project directory, run: `npm start`
 
