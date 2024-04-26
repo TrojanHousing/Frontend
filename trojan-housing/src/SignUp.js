@@ -55,20 +55,9 @@ const SignUp = () => {
     <div id="2">
       <Navbar />
       <div className="container">
-        <div className="form-container" style={{marginTop: '-250px'}}>
+        <div className="form-container" style={{marginTop: '-400px'}}>
           <h2>Sign Up</h2>
           <form onSubmit={handleSubmit} className="form">
-            <div>
-              <label>Username:</label>
-              <input
-                type="text"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                className="input"
-              />
-              {errors.username && <div className="error">{errors.username}</div>}
-            </div>
             <div>
               <label>Email:</label>
               <input
@@ -79,17 +68,6 @@ const SignUp = () => {
                 className="input"
               />
               {errors.email && <div className="error">{errors.email}</div>}
-            </div>
-            <div>
-              <label>Confirm Email:</label>
-              <input
-                type="email"
-                name="emailConfirmation"
-                value={formData.emailConfirmation}
-                onChange={handleChange}
-                className="input"
-              />
-              {errors.emailConfirmation && <div className="error">{errors.emailConfirmation}</div>}
             </div>
             <div>
               <label>Password:</label>
