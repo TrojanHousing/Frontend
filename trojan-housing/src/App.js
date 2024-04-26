@@ -5,6 +5,7 @@ import SignUp from './SignUp';
 import Navbar from './Navbar';
 import UserProfile from './UserProfile';
 import IndividualProperty from './IndividualProperty';
+
 import MainPage from './MainPage';
 
 const App = () => {
