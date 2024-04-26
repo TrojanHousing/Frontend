@@ -1,9 +1,18 @@
 .user-info {
-    display: flex;
+
     justify-content: center;
     align-items: center;
-    margin-bottom: 100px;
-    margin-top: 50px;
+    margin-bottom: 20px;
+    margin-top: -60px;
+}
+.user-profile-block{
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin-top:100px;
+    margin-left: 250px;
+    height: 20vh;        /* Full height of the viewport */
+    width: 100vw;   
 }
 .user-avatar {
     width: 50px; 

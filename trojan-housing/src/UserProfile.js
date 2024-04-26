@@ -11,6 +11,8 @@ function UserProfile() {
   return (
     <div className="user-profile">
       <Navbar />
+      <div className = "user-profile-block">
+
       <div className="user-info">
         <img src={Avatar} alt="USER PROFILE PICTURE" className="user-avatar" />
         <h1>{username}</h1>
@@ -29,6 +31,8 @@ function UserProfile() {
 
       </div>
 
+      
+      </div>
 
     </div>
   );
