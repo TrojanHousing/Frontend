@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { useAuth } from './AuthenticationState'; // Import useAuth hook
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthenticationState';
 import Navbar from './Navbar';
-import './SignIn.css';  
+import './SignIn.css';
 
 const SignUp = () => {
-  const { signUp } = useAuth();  // Access signUp method
+  const navigate = useNavigate();
+  const { signUp } = useAuth();
   const [formData, setFormData] = useState({
-    username: '',
     email: '',
-    emailConfirmation: '',
     password: '',
-    passwordConfirmation: '',
+    passwordConfirmation: ''
   });
   const [errors, setErrors] = useState({});
 
@@ -29,15 +29,10 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = {};
-    if (!formData.username) {
-      errors.username = 'Username is required';
-    }
     if (!formData.email) {
       errors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       errors.email = 'Email is invalid';
-    } else if (formData.email !== formData.emailConfirmation) {
-      errors.emailConfirmation = 'Emails do not match';
     }
     if (!formData.password) {
       errors.password = 'Password is required';
@@ -48,7 +43,8 @@ const SignUp = () => {
     }
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
-      signUp(formData);  // Call signUp on successful validation
+      signUp(formData);
+      navigate('/'); // Navigate to homepage upon successful sign up
     }
   };
 

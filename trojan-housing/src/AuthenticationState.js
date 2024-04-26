@@ -19,13 +19,19 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('user', JSON.stringify(userData));
     };
 
+    const signUp = (formData) => {
+        const userData = { email: formData.email }; // Simulated user data
+        setUser(userData);
+        localStorage.setItem('user', JSON.stringify(userData));
+    };
+
     const signOut = () => {
         setUser(null);
         localStorage.removeItem('user');
     };
 
     return (
-        <AuthContext.Provider value={{ user, signIn, signOut }}>
+        <AuthContext.Provider value={{ user, signIn, signOut, signUp }}>
             {children}
         </AuthContext.Provider>
     );

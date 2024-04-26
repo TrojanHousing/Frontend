@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { useAuth } from './AuthenticationState'; // Import useAuth hook
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import { useAuth } from './AuthenticationState';
 import Navbar from './Navbar';
 import './SignIn.css';  
 
 const SignIn = () => {
-  const { signIn } = useAuth();  // Access signIn method
+  const navigate = useNavigate(); // Initialize navigate function
+  const { signIn } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -36,7 +38,8 @@ const SignIn = () => {
     }
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
-      signIn(formData.email, formData.password);  // Call signIn on successful validation
+      signIn(formData.email, formData.password);
+      navigate('/'); // Navigate to homepage upon successful sign in
     }
   };
 
