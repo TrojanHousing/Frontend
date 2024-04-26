@@ -19,7 +19,7 @@ const Navbar = () => {
                 <Link to="/UserProfile" className="navbar-link">User Profile</Link>
               </li>
               <li className="navbar-item">
-                <button onClick={signOut} className="navbar-link">Logout</button>
+                <button onClick={signOut} className="navbar-link button-link">Logout</button>
               </li>
             </>
           ) : (

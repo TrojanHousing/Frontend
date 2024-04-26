@@ -1,39 +1,47 @@
 .navbar {
-    background-color: #990000; 
-    padding: 0.8rem 2rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.25);
-  }
-  
-  .navbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .navbar-logo {
-    color: white;
-    text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  .navbar-menu {
-    list-style: none;
-    display: flex;
-  }
-  
-  .navbar-item {
-    margin-left: 20px;
-  }
-  
-  .navbar-link {
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    transition: background-color 0.3s;
-  }
-  
-  .navbar-link:hover {
-    background-color: #BA2025; 
-  }
-  
+  background-color: #990000; 
+  padding: 0.8rem 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-menu {
+  list-style: none;
+  display: flex;
+}
+
+.navbar-item {
+  margin-left: 20px;
+}
+
+.navbar-link, .navbar-button {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+  display: inline-block; /* Maintain inline behavior like a link */
+}
+
+.navbar-button {
+  background: none; /* Ensures no button-specific styles are applied */
+}
+
+.navbar-link:hover, .navbar-button:hover {
+  background-color: #BA2025;
+}
