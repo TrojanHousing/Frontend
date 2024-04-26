@@ -2,11 +2,21 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-gap: 20px;
+  padding: 20px;
+  margin-top: 10px;
 }
 
 .property-item {
   border: 1px solid #ccc;
-  padding: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.property-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .property-item a {
@@ -21,4 +31,3 @@
 .price-range {
   margin-top: 5px;
   font-size: 0.9em;
-}
