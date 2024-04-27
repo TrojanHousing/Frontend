@@ -1,16 +1,16 @@
 .filter-panel {
     display: flex;
     flex-wrap: wrap;
-    align-items: center; 
+    align-items: center;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
 }
 
 .filter-select {
-    flex: 1 1 180px; 
+    flex: 1 1 180px;
     padding: 10px;
     border-radius: 4px;
     border: 1px solid #ccc;
@@ -35,8 +35,8 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-    white-space: nowrap; 
-    margin-left: auto; 
+    white-space: nowrap;
+    margin-left: auto;
 }
 
 .filter-button:hover {
@@ -50,8 +50,8 @@
 
     .filter-select,
     .filter-button {
-        width: 100%; 
-        margin-bottom: 10px; 
+        width: 100%;
+        margin-bottom: 10px;
     }
 
     .filter-select {

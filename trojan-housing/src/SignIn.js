@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 import { useAuth } from './AuthenticationState';
 import Navbar from './Navbar';
-import './SignIn.css';  
+import './SignIn.css';
 
 const SignIn = () => {
   const navigate = useNavigate(); // Initialize navigate function
@@ -25,7 +25,7 @@ const SignIn = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = {};
     if (!formData.email) {
@@ -38,8 +38,24 @@ const SignIn = () => {
     }
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
-      signIn(formData.email, formData.password);
-      navigate('/'); // Navigate to homepage upon successful sign in
+      try {
+        const response = await fetch('http://localhost:8080/userLogin', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: `email=${encodeURIComponent(formData.email)}&password=${encodeURIComponent(formData.password)}`,
+        });
+        if (response.ok) {
+          signIn(formData.email, formData.password);
+          navigate('/');
+        } else {
+          // Handle login error
+          console.error('Login failed');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
     }
   };
 

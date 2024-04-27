@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const signUp = (formData) => {
-        const userData = { email: formData.email }; // Simulated user data
+        const userData = { email: formData.email };
         setUser(userData);
         localStorage.setItem('user', JSON.stringify(userData));
     };

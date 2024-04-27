@@ -26,7 +26,7 @@ const SignUp = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = {};
     if (!formData.email) {
@@ -43,8 +43,24 @@ const SignUp = () => {
     }
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
-      signUp(formData);
-      navigate('/'); // Navigate to homepage upon successful sign up
+      try {
+        const response = await fetch('http://localhost:8080/userRegister', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: `email=${encodeURIComponent(formData.email)}&password=${encodeURIComponent(formData.password)}`,
+        });
+        if (response.ok) {
+          signUp(formData);
+          navigate('/');
+        } else {
+          // Handle registration error
+          console.error('Registration failed');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
     }
   };
 
