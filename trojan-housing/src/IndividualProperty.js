@@ -19,6 +19,27 @@ const IndividualProperty = () => {
   const username = "sample@usc.edu"; // Username for all properties
   const [expandImages, setExpandImages] = useState(false); // new state for toggling image display
   const [visibleImages, setVisibleImages] = useState([]);
+  const [newRating, setNewRating] = useState('');
+  const [propertyComments, setPropertyComments] = useState([
+    {
+      username: 'Annie. P',
+      date: '2023-05-20',
+      rating: '★★★★☆',
+      text: 'Great property with amazing amenities!',
+    },
+    {
+      username: 'Jeff. H',
+      date: '2024-01-16',
+      rating: '★☆☆☆☆',
+      text: 'The landlord is terrible. This is the absolute worst place I have ever had the misfortune of living in.',
+    },
+    {
+      username: 'Trojan T.',
+      date: '2023-09-29',
+      rating: '★★★☆☆',
+      text: 'It is ok, but the price is too high for what you get.',
+    },
+  ]);
 
 
 
@@ -52,29 +73,6 @@ const IndividualProperty = () => {
     sqft: 1200,
   };
 
-  //examples of comments
-  const propertyComments = [
-    {
-      username: 'Annie. P',
-      date: '2023-05-20',
-      rating: '★★★★☆',
-      text: 'Great property with amazing amenities!',
-    },
-    {
-      username: 'Jeff. H',
-      date: '2024-01-16',
-      rating: '★☆☆☆☆',
-      text: 'The landlord is terrible. This is the absolute worst place I have ever had the misfortune of living in.',
-    },
-    {
-      username: 'Trojan T.',
-      date: '2023-09-29',
-      rating: '★★★☆☆',
-      text: 'It is ok, but the price is too high for what you get.',
-    },
-
-  ];
-
   useEffect(() => {
     const updateVisibleImages = () => {
       const pageWidth = window.innerWidth;
@@ -95,6 +93,28 @@ const IndividualProperty = () => {
       window.removeEventListener('resize', updateVisibleImages);
     };
   }, [property.images, expandImages]);
+
+  const [newComment, setNewComment] = useState('');
+
+  const handleCommentChange = (event) => {
+    setNewComment(event.target.value);
+  };
+
+  const handleSubmitComment = () => {
+    if (newComment.trim() !== '') {
+      const currentDate = new Date().toISOString().slice(0, 10);
+      const formattedRating = '★'.repeat(newRating) + '☆'.repeat(5 - newRating);
+      const newPropertyComment = {
+        username: username,
+        date: currentDate,
+        rating: formattedRating,
+        text: newComment,
+      };
+      setPropertyComments([...propertyComments, newPropertyComment]);
+      setNewComment('');
+      setNewRating(0);
+    }
+  };
 
 
 
@@ -146,6 +166,25 @@ const IndividualProperty = () => {
             {propertyComments.map((comment, index) => (
               <PropertyComment key={index} comment={comment} />
             ))}
+            <div className="add-comment">
+              <div className="rating-input">
+                {[...Array(5)].map((_, index) => (
+                  <span
+                    key={index}
+                    className={`star ${index < newRating ? 'selected' : ''}`}
+                    onClick={() => setNewRating(index + 1)}
+                  >
+                    ★
+                  </span>
+                ))}
+              </div>
+              <textarea
+                placeholder="Add a comment..."
+                value={newComment}
+                onChange={handleCommentChange}
+              ></textarea>
+              <button onClick={handleSubmitComment}>Submit</button>
+            </div>
           </div>
         </div>
       </div >

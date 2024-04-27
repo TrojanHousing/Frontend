@@ -2,6 +2,7 @@
 .navbar-div {}
 
 .individual-property {
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
@@ -88,7 +89,7 @@
 
   object-fit: cover;
   height: 275px;
-  width: 430px;
+  width: 375px;
   /* fixed height for each image for now*/
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -116,4 +117,50 @@
 
 .toggle-button:hover {
   background-color: #CC0000;
+}
+
+
+.add-comment {
+  margin-top: 20px;
+}
+
+.add-comment textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.add-comment button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #990000;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-comment button:hover {
+  background-color: #CC0000;
+}
+
+.rating-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.rating-input .star {
+  font-size: 24px;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.rating-input .star.selected {
+  color: #FFD700;
 }
