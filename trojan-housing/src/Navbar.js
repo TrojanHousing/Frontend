@@ -1,10 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import { useAuth } from './AuthenticationState';  // Import useAuth to access authentication state
 
 const Navbar = () => {
   const { user, signOut } = useAuth();  // Get user and signOut function from context
+  const navigate = useNavigate();      // Initialize navigate function for redirection
+
+  const handleLogout = () => {
+    signOut();                         // Sign out the user
+    navigate('/');                     // Navigate to the homepage
+  };
 
   return (
     <nav className="navbar">
@@ -19,7 +25,7 @@ const Navbar = () => {
                 <Link to="/UserProfile" className="navbar-link">User Profile</Link>
               </li>
               <li className="navbar-item">
-                <button onClick={signOut} className="navbar-link button-link">Logout</button>
+                <button onClick={handleLogout} className="navbar-link button-link">Logout</button>
               </li>
             </>
           ) : (
