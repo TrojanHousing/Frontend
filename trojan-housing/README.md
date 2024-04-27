@@ -2,31 +2,35 @@
 
 ## Check Downloads
 
-Run `npm -v` and `node -v` to confirm.\
-If they are not found, download whichever are missing. 
+Run `npm -v` and `node -v` to confirm that they are downloaded on the computer. If `node` is not downloaded, download from https://nodejs.org/en/download. 
 
 ## Run Project
 
-Clone the project: `git clone <repository URL>`
+Clone the project: `git clone git@github.com:TrojanHousing/Frontend.git`.
 
-Install dependencies: `npm install` and `npm install react-router-dom@latest`. For good measure, use `npm update` after this. 
+In terminal, navigate to the `Frontend` directory that is created. From there, `cd` into the `trojan-housing` folder.\
+Once there, install dependencies: `npm install`.\
+To run the frontend server, run: `npm start` in the same directory (`trojan-housing`).
 
-In the project directory, run: `npm start`. If this doesnt work, check https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported. 
+This will run the app in the development mode.Open [http://localhost:3000](http://localhost:3000) to view it in your browser.\
 
-This will run the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.\
-You do not need to restart the server after changes are made to files.
+If any errors are encountered run the following (in the same `trojan-housing` directory):
+
+- `npm install react-router-dom@latest`
+- `npm update` (especially if `npm` was not just installed)
+- Check https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported (or search any error messages returned).
+
+The page will automatically update (and reload) when you make changes.\
+You do not need to restart the server after changes are made. If desired, run `npm start` again.
 
 ## Development
 
-Checkout a git branch using `git checkout -b <branch name>`. Either your own name or whatever feature you are working on is fine for the branch name.
+Checkout a git branch using `git checkout -b <branch name>`. Use your last name as the branch name.
 
 Commit changes to this branch until they are ready to be merged with the main development branch.
 
-**Make sure to `git pull` before `git push`. There should not be any conflicts if you are working on your own branch.**
+**Make sure to `git pull` before `git push`. There should not be any conflicts if you are working on your own branch. `git pull` frequently!!!** 
 
 ---
 
