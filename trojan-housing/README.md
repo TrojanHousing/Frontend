@@ -11,7 +11,7 @@ Clone the project: `git clone <repository URL>`
 
 Install dependencies: `npm install` and `npm install react-router-dom@latest`. For good measure, use `npm update` after this. 
 
-In the project directory, run: `npm start`
+In the project directory, run: `npm start`. If this doesnt work, check https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported. 
 
 This will run the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
