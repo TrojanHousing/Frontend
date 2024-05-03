@@ -9,12 +9,14 @@ import property1 from './images/property1.jpg';
 import property2 from './images/property2.jpg';
 import property3 from './images/property3.jpg';
 import property4 from './images/property4.jpg';
+import { useAuth } from './AuthenticationState';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBed, faBath, faRulerCombined } from '@fortawesome/free-solid-svg-icons'
 
 
 
 const IndividualProperty = () => {
+  const { user } = useAuth();
   const [isSaved, setIsSaved] = useState(false);
   const username = "sample@usc.edu"; // Username for all properties
   const [expandImages, setExpandImages] = useState(false); // new state for toggling image display
@@ -105,7 +107,7 @@ const IndividualProperty = () => {
       const currentDate = new Date().toISOString().slice(0, 10);
       const formattedRating = '★'.repeat(newRating) + '☆'.repeat(5 - newRating);
       const newPropertyComment = {
-        username: username,
+        username: user?.email,
         date: currentDate,
         rating: formattedRating,
         text: newComment,

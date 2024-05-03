@@ -7,22 +7,14 @@ import './MainPage.css';
 
 function MainPage() {
     const [searchTerm, setSearchTerm] = useState('');
-    const [filters, setFilters] = useState({
-        type: '',
-        price: '',
-        bedrooms: '',
-        distance: '',
-    });
+    const [filters, setFilters] = useState([]);
 
     const handleSearchChange = term => {
         setSearchTerm(term.toLowerCase());
     };
 
-    const handleFilterChange = newFilters => {
-        setFilters(prevFilters => ({
-            ...prevFilters,
-            ...newFilters
-        }));
+    const handleFilterChange = (searchCriteria) => {
+        setFilters(searchCriteria);
     };
 
     return (

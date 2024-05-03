@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './PropertyGrid.css';
 
@@ -9,10 +9,40 @@ const properties = [
 ];
 
 const PropertyGrid = ({ searchTerm, filters }) => {
+
+    const [properties, setProperties] = useState([]);
+
     const filteredProperties = properties.filter(property => {
         return property.address.toLowerCase().includes(searchTerm) &&
             (!filters.type || property.type === filters.type);
     });
+
+    useEffect(() => {
+        // Fetch the filtered properties from the backend
+        const fetchProperties = async () => {
+            try {
+                const response = await fetch('http://localhost:8080/properties/filterProperties', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(filters),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setProperties(data);
+                } else {
+                    console.error('Error fetching properties:', response.status);
+                }
+            } catch (error) {
+                console.error('Error fetching properties:', error);
+            }
+        };
+
+        fetchProperties();
+    }, [filters]);
+
 
     return (
         <div className="property-grid">
@@ -20,9 +50,9 @@ const PropertyGrid = ({ searchTerm, filters }) => {
                 <div className="property-item" key={property.id}>
                     {/*<Link to={`/IndividualProperty/${property.id}`}>*/}
                     <Link to={`/IndividualProperty`}>
-                        <img src={property.image} alt={`View ${property.address}`} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+                        <img src={property.topPicture} alt={`View ${property.address}`} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
                         <div className="address">{property.address}</div>
-                        <div className="price-range">{property.priceRange}</div>
+                        <div className="price-range">${property.price}</div>
                     </Link>
                 </div>
             ))}
