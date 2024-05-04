@@ -40,32 +40,33 @@ const IndividualProperty = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    const fetchProperty = async () => {
+    const fetchProperties = async () => {
       try {
         const response = await fetch('http://localhost:8080/properties/filterProperties', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify([{ filterKey: 'propertyID', value: id }]),
+          body: JSON.stringify([]), // Pass an empty array to fetch all properties
         });
 
         if (response.ok) {
           const data = await response.json();
-          if (data.length > 0) {
-            setProperty(data[0]);
+          const filteredProperty = data.find((property) => property.propertyID === parseInt(id));
+          if (filteredProperty) {
+            setProperty(filteredProperty);
           } else {
             console.error('Property not found');
           }
         } else {
-          console.error('Error fetching property:', response.status);
+          console.error('Error fetching properties:', response.status);
         }
       } catch (error) {
-        console.error('Error fetching property:', error);
+        console.error('Error fetching properties:', error);
       }
     };
 
-    fetchProperty();
+    fetchProperties();
   }, [id]);
 
   useEffect(() => {
