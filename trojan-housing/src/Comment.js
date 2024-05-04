@@ -11,15 +11,15 @@ const Comment = () => {
     if (user) {
       const fetchComments = async () => {
         try {
-          const response = await fetch('http://localhost:8080/getCommentsByUser?userID='+user?.id, {
+          const response = await fetch('http://localhost:8080/getCommentsByUser?userID='+localStorage.getItem('id'), {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
           });
-          const data = await response.text(); // Get the response as text
-          const parsedComments = parseComments(data); // Parse the comments string
-          setComments(parsedComments); // Set the parsed comments
+          const data = await response.text();
+          const parsedComments = parseComments(data);
+          setComments(parsedComments);
         } catch (error) {
           console.error('Error fetching comments:', error);
         }
@@ -35,14 +35,13 @@ const Comment = () => {
       return [];
     }
     commentsString = commentsString.replace('[', '').replace(']', '');
-    // Split the comments string into individual comment strings
     const commentStrings = commentsString.split('},{');
     // Parse each comment string into a comment object
     return commentStrings.map((commentString) => {
       const parts = commentString.split(',');
       const text = parts.find((part) => part.includes('"text":')).replace('"text":', '');
       const rating = parts.find((part) => part.includes('"rating":')).replace('"rating":', '');
-      return { text: text.replace(/"/g, ''), rating: parseInt(rating) };
+      return { text: text.replace(/"/g, ''), rating: parseInt(rating), address: "address"};
     });
   };
 
@@ -61,7 +60,7 @@ const Comment = () => {
             <tr key={index}>
               <td>
                 <Link to={`/IndividualProperty`}>
-                  {comment.text}
+                  {comment.address}
                 </Link>
               </td>
               <td>{'★'.repeat(comment.rating)}</td>
