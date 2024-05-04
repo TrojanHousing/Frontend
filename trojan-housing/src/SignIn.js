@@ -48,6 +48,9 @@ const SignIn = () => {
         });
         if (response.ok) {
           signIn(formData.email, formData.password);
+          const data = await response.text(); 
+          console.log("userid="+data);
+          localStorage.setItem('id',data);
           navigate('/');
         } else {
           // Handle login error
