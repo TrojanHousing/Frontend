@@ -53,6 +53,9 @@ const SignUp = () => {
         });
         if (response.ok) {
           signUp(formData);
+          const data = await response.text(); 
+          console.log("userid="+data);
+          localStorage.setItem('id',data);
           navigate('/');
         } else {
           // Handle registration error
