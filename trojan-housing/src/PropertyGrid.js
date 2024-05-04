@@ -49,7 +49,7 @@ const PropertyGrid = ({ searchTerm, filters }) => {
             {filteredProperties.map((property) => (
                 <div className="property-item" key={property.id}>
                     {/*<Link to={`/IndividualProperty/${property.id}`}>*/}
-                    <Link to={`/IndividualProperty`}>
+                    <Link to={`/IndividualProperty/${property.propertyID}`}>
                         <img src={property.topPicture} alt={`View ${property.address}`} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
                         <div className="address">{property.address}</div>
                         <div className="price-range">${property.price}</div>
