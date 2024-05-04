@@ -1,22 +1,57 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Comment.css';
 import { Link } from 'react-router-dom';
+import { useAuth } from './AuthenticationState';
 
-const username = "sample@usc.edu"; // Username for all comments
-
-const comments = [
-  { address: "123 Main St", date: "27/07/2017", rating: "★★★★☆", review: "Great location with a stunning view!" },
-  { address: "456 Broadway Ave", date: "27/07/2017", rating: "★★★★☆", review: "Modern amenities and friendly staff. Broadway Palace" },
-  { address: "789 Elm St", date: "24/07/2017", rating: "★★★☆☆", review: "Good value for the price, but noisy at night." }
-];
 const Comment = () => {
+  const { user } = useAuth();
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    if (user) {
+      const fetchComments = async () => {
+        try {
+          const response = await fetch('http://localhost:8080/getCommentsByUser?userID='+user?.id, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          const data = await response.text(); // Get the response as text
+          const parsedComments = parseComments(data); // Parse the comments string
+          setComments(parsedComments); // Set the parsed comments
+        } catch (error) {
+          console.error('Error fetching comments:', error);
+        }
+      };
+
+      fetchComments();
+    }
+  }, [user]);
+
+  // Function to parse the comments string and return an array of comments objects
+  const parseComments = (commentsString) => {
+    if (!commentsString || commentsString === '[]') {
+      return [];
+    }
+    commentsString = commentsString.replace('[', '').replace(']', '');
+    // Split the comments string into individual comment strings
+    const commentStrings = commentsString.split('},{');
+    // Parse each comment string into a comment object
+    return commentStrings.map((commentString) => {
+      const parts = commentString.split(',');
+      const text = parts.find((part) => part.includes('"text":')).replace('"text":', '');
+      const rating = parts.find((part) => part.includes('"rating":')).replace('"rating":', '');
+      return { text: text.replace(/"/g, ''), rating: parseInt(rating) };
+    });
+  };
+
   return (
     <div className="comments">
       <table>
         <thead>
           <tr>
             <th>Address</th>
-            <th>Date</th>
             <th>Rating</th>
             <th>Review</th>
           </tr>
@@ -26,12 +61,11 @@ const Comment = () => {
             <tr key={index}>
               <td>
                 <Link to={`/IndividualProperty`}>
-                  {comment.address}
+                  {comment.text}
                 </Link>
               </td>
-              <td>{comment.date}</td>
-              <td>{comment.rating}</td>
-              <td>{comment.review}</td>
+              <td>{'★'.repeat(comment.rating)}</td>
+              <td>{comment.text}</td>
             </tr>
           ))}
         </tbody>
