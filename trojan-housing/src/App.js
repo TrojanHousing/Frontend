@@ -6,11 +6,11 @@ import Navbar from './Navbar';
 import UserProfile from './UserProfile';
 import IndividualProperty from './IndividualProperty';
 import MainPage from './MainPage';
-import { AuthProvider } from './AuthenticationState'; 
+import { AuthProvider } from './AuthenticationState';
 
 const App = () => {
   return (
-    <AuthProvider> 
+    <AuthProvider>
       <Router>
         <div>
           <Routes>
@@ -19,6 +19,7 @@ const App = () => {
             <Route path="/SignUp" element={<SignUp />} />
             <Route path="/UserProfile" element={<UserProfile />} />
             <Route path="/IndividualProperty" element={<IndividualProperty />} />
+            <Route path="/IndividualProperty/:id" element={<IndividualProperty />} />
           </Routes>
         </div>
       </Router>
