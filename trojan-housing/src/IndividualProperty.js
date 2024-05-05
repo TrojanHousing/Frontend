@@ -2,7 +2,6 @@
 //individualProperty.js
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Comments from './Comment';
 import Navbar from './Navbar';
 import PropertyComment from './PropertyComment';
 import './IndividualProperty.css';
@@ -17,26 +16,6 @@ const IndividualProperty = () => {
   const [visibleImages, setVisibleImages] = useState([]);
   const [allImages, setAllImages] = useState([]);
   const [newRating, setNewRating] = useState('');
-  const [propertyComments, setPropertyComments] = useState([
-    {
-      username: 'Annie. P',
-      date: '2023-05-20',
-      rating: '★★★★☆',
-      text: 'Great property with amazing amenities!',
-    },
-    {
-      username: 'Jeff. H',
-      date: '2024-01-16',
-      rating: '★☆☆☆☆',
-      text: 'The landlord is terrible. This is the absolute worst place I have ever had the misfortune of living in.',
-    },
-    {
-      username: 'Trojan T.',
-      date: '2023-09-29',
-      rating: '★★★☆☆',
-      text: 'It is ok, but the price is too high for what you get.',
-    },
-  ]);
   const [property, setProperty] = useState(null);
   const { id } = useParams();
 
@@ -112,10 +91,6 @@ const IndividualProperty = () => {
     setExpandImages(!expandImages);
   };
 
-
-
-
-
   const splitDescription = (description) => {
     return description.split('.').map((sentence, index) => (
       <React.Fragment key={index}>
@@ -145,32 +120,6 @@ const IndividualProperty = () => {
       });
   };
 
-
-
-
-
-  const [newComment, setNewComment] = useState('');
-
-  const handleCommentChange = (event) => {
-    setNewComment(event.target.value);
-  };
-
-  const handleSubmitComment = () => {
-    if (newComment.trim() !== '') {
-      const currentDate = new Date().toISOString().slice(0, 10);
-      const formattedRating = '★'.repeat(newRating) + '☆'.repeat(5 - newRating);
-      const newPropertyComment = {
-        username: user?.email,
-        date: currentDate,
-        rating: formattedRating,
-        text: newComment,
-      };
-      setPropertyComments([...propertyComments, newPropertyComment]);
-      setNewComment('');
-      setNewRating(0);
-    }
-  };
-
   return (
     <div>
       <div className="navbar-div">
@@ -196,8 +145,6 @@ const IndividualProperty = () => {
           </div>
 
 
-
-
           <div className="property-details">
             <div className="property-info">
               <h2>{property.name}</h2>
@@ -217,30 +164,7 @@ const IndividualProperty = () => {
             </div>
             <div className="property-comments">
               <h2>Comments</h2>
-              {propertyComments.map((comment, index) => (
-                <PropertyComment key={index} comment={comment} />
-              ))}
-              {user && (
-                <div className="add-comment">
-                  <div className="rating-input">
-                    {[...Array(5)].map((_, index) => (
-                      <span
-                        key={index}
-                        className={`star ${index < newRating ? 'selected' : ''}`}
-                        onClick={() => setNewRating(index + 1)}
-                      >
-                        ★
-                      </span>
-                    ))}
-                  </div>
-                  <textarea
-                    placeholder="Add a comment..."
-                    value={newComment}
-                    onChange={handleCommentChange}
-                  ></textarea>
-                  <button onClick={handleSubmitComment}>Submit</button>
-                </div>
-              )}
+              <PropertyComment pid={property.propertyID} />
             </div>
           </div>
         </div>
