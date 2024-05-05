@@ -23,11 +23,11 @@ function UserProfile() {
         <div className="interactions">
 
           <div className="saved-properties">
-            <h2>{user?.email}'s Saved Properties</h2>
+            <h2>Saved Properties</h2>
             <SavedProperties />
           </div>
           <div className="user-comments">
-            <h2>{user?.email}'s Property Ratings/Comments</h2>
+            <h2>Posted Reviews</h2>
             <Comments />
           </div>
 
