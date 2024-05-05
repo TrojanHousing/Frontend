@@ -39,7 +39,7 @@ const SignIn = () => {
     }
     setErrors(errors);
     setLoginError('');
-
+  
     if (Object.keys(errors).length === 0) {
       try {
         const response = await fetch('http://localhost:8080/userLogin', {
@@ -49,12 +49,12 @@ const SignIn = () => {
           },
           body: `email=${encodeURIComponent(formData.email)}&password=${encodeURIComponent(formData.password)}`,
         });
-        const errorText = await response.text(); // Get the response text, which might be an error code or message
+        const errorText = await response.text(); // Get the response text
+        console.log("Response status:", response.status); // Debug output of the response status
+        console.log("Response text:", errorText); // Debug output of the response text
+  
         if (response.ok) {
           signIn(formData.email, formData.password);
-          const data = await response.text(); 
-          console.log("userid="+data);
-          localStorage.setItem('id',data);
           navigate('/');
         } else {
           switch (errorText) {
@@ -65,7 +65,7 @@ const SignIn = () => {
               setLoginError('Incorrect password. Please try again.');
               break;
             default:
-              setLoginError('Login failed, please check your credentials and try again.');
+              setLoginError(errorText || 'Login failed, please check your credentials and try again.');
           }
         }
       } catch (error) {
@@ -74,6 +74,7 @@ const SignIn = () => {
       }
     }
   };
+  
 
   return (
     <div id="1">
