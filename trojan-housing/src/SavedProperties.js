@@ -21,9 +21,9 @@ const PropertyGrid = () => {
       {properties.map((property, index) => (
         <div className="property-item" key={index}>
           <Link to={`/IndividualProperty/${property.propertyID}`}>
+            <img src={property.topPicture} alt={`View ${property.address}`} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
             <div className="address">{property.address}</div>
             <div className="price-range">{"$"+property.price}</div>
-            <img src={property.topPicture} alt={`View ${property.address}`} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
           </Link>
         </div>
       ))}
