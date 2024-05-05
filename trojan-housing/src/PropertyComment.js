@@ -11,7 +11,7 @@ const PropertyComment = ({ pid }) => {
   // Function to fetch comments from the server
   const fetchComments = async () => {
     try {
-      const response = await fetch('http://localhost:8080/getCommentsByPropertyID?propertyID='+pid, {
+      const response = await fetch('http://localhost:8080/getCommentsByPropertyID?propertyID=' + pid, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ const PropertyComment = ({ pid }) => {
 
   useEffect(() => {
     fetchComments();
-  }, []); 
+  }, []);
 
   // Function to parse the comments string and return an array of comments objects
   const parseComments = (commentsString) => {
@@ -41,7 +41,7 @@ const PropertyComment = ({ pid }) => {
       const parts = commentString.split(',');
       const text = parts.find((part) => part.includes('"text":')).replace('"text":', '');
       const rating = parts.find((part) => part.includes('"rating":')).replace('"rating":', '');
-      return { text: text.replace(/["{}]/g, ''), rating: parseInt(rating)};
+      return { text: text.replace(/["{}]/g, ''), rating: parseInt(rating) };
     });
   };
 
@@ -60,7 +60,7 @@ const PropertyComment = ({ pid }) => {
         text: newComment,
         rating: formattedRating
       };
-  
+
       try {
         const response = await fetch('http://localhost:8080/addComment', {
           method: 'POST',
@@ -71,7 +71,7 @@ const PropertyComment = ({ pid }) => {
         });
 
         if (response.ok) {
-          fetchComments();  
+          fetchComments();
         } else {
           console.error('Comment was not added successfully. Status:', response.status);
         }
@@ -92,10 +92,28 @@ const PropertyComment = ({ pid }) => {
         </div>
       ))}
 
-      <form onSubmit={handleSubmitComment}>
-        <textarea value={newComment} onChange={handleCommentChange} />
-        <button type="submit">Submit Comment</button>
-      </form>
+      {user && (
+
+        <form onSubmit={handleSubmitComment} className="add-comment">
+          <div className="rating-input">
+            {[...Array(5)].map((_, index) => (
+              <span
+                key={index}
+                className={`star ${index < newRating ? 'selected' : ''}`}
+                onClick={() => setNewRating(index + 1)}
+              >
+                ★
+              </span>
+            ))}
+          </div>
+          <textarea
+            placeholder="Add a comment..."
+            value={newComment}
+            onChange={handleCommentChange}
+          ></textarea>
+          <button type="submit">Submit Comment</button>
+        </form>
+      )}
     </div>
   );
 };
