@@ -52,6 +52,9 @@ const SignIn = () => {
         const errorText = await response.text(); // Get the response text, which might be an error code or message
         if (response.ok) {
           signIn(formData.email, formData.password);
+          const data = await response.text(); 
+          console.log("userid="+data);
+          localStorage.setItem('id',data);
           navigate('/');
         } else {
           switch (errorText) {

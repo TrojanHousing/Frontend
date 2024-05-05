@@ -1,196 +1,215 @@
 
 //individualProperty.js
 import React, { useState, useEffect } from 'react';
-import Comments from './Comment';
+import { useParams } from 'react-router-dom';
 import Navbar from './Navbar';
 import PropertyComment from './PropertyComment';
 import './IndividualProperty.css';
-import property1 from './images/property1.jpg';
-import property2 from './images/property2.jpg';
-import property3 from './images/property3.jpg';
-import property4 from './images/property4.jpg';
 import { useAuth } from './AuthenticationState';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBed, faBath, faRulerCombined } from '@fortawesome/free-solid-svg-icons'
-
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBed, faBath, faRulerCombined } from '@fortawesome/free-solid-svg-icons';
 
 const IndividualProperty = () => {
   const { user } = useAuth();
   const [isSaved, setIsSaved] = useState(false);
-  const username = "sample@usc.edu"; // Username for all properties
-  const [expandImages, setExpandImages] = useState(false); // new state for toggling image display
+  const [expandImages, setExpandImages] = useState(false);
   const [visibleImages, setVisibleImages] = useState([]);
+  const [allImages, setAllImages] = useState([]);
   const [newRating, setNewRating] = useState('');
-  const [propertyComments, setPropertyComments] = useState([
-    {
-      username: 'Annie. P',
-      date: '2023-05-20',
-      rating: '★★★★☆',
-      text: 'Great property with amazing amenities!',
-    },
-    {
-      username: 'Jeff. H',
-      date: '2024-01-16',
-      rating: '★☆☆☆☆',
-      text: 'The landlord is terrible. This is the absolute worst place I have ever had the misfortune of living in.',
-    },
-    {
-      username: 'Trojan T.',
-      date: '2023-09-29',
-      rating: '★★★☆☆',
-      text: 'It is ok, but the price is too high for what you get.',
-    },
-  ]);
+  const [property, setProperty] = useState(null);
+  const { id } = useParams();
 
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/properties/filterProperties', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify([]), // Pass an empty array to fetch all properties
+        });
 
+        if (response.ok) {
+          const data = await response.json();
+          const filteredProperty = data.find((property) => property.propertyID === parseInt(id));
+          if (filteredProperty) {
+            setProperty(filteredProperty);
+          } else {
+            console.error('Property not found');
+          }
+        } else {
+          console.error('Error fetching properties:', response.status);
+        }
+      } catch (error) {
+        console.error('Error fetching properties:', error);
+      }
+    };
 
-  const handleSaveProperty = () => {
-    //update isSaved state when the user clicks the "Save" button
-    setIsSaved(!isSaved);
+    fetchProperties();
+  }, [id]);
+
+  const fetchImages = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/getImage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `property_id=${property.propertyID}`,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setAllImages(data);  // Store all images here
+        setVisibleImages(data.slice(0, 3));  // Initialize visibleImages with only the first few images
+      } else {
+        console.error('Error fetching images:', response.status);
+      }
+    } catch (error) {
+      console.error('Error fetching images:', error);
+    }
   };
+
+  useEffect(() => {
+
+    if (property) {
+      fetchImages();
+    }
+  }, [property]);
+
+  useEffect(() => {
+    if (!expandImages) {
+      setVisibleImages(allImages.slice(0, 3)); // Show only the first few images
+    } else {
+      setVisibleImages(allImages); // Show all images
+    }
+  }, [expandImages, allImages]);
+
 
   const toggleImages = () => {
     setExpandImages(!expandImages);
   };
 
-
-
-  //sample property data (replace with actual data from the backend)
-  const property = {
-    id: 1,
-    name: 'Luxury Apartment',
-    images: [
-      { url: property1 },
-      { url: property2 },
-      { url: property3 },
-      { url: property4 },
-    ],
-    price: '$2500/month',
-    description: 'A luxurious apartment with modern amenities.',
-    floorplan: '2 bedrooms, 2 bathrooms, 1200 sqft',
-    address: '123 Main St, City, State 12345',
-    beds: 2,
-    baths: 2,
-    sqft: 1200,
+  const splitDescription = (description) => {
+    return description.split('.').map((sentence, index) => (
+      <React.Fragment key={index}>
+        • {sentence.trim()}.<br /><br />
+      </React.Fragment>
+    ));
   };
 
-  useEffect(() => {
-    const updateVisibleImages = () => {
-      const pageWidth = window.innerWidth;
-      const imageWidth = 430;
-      const imageHeight = 275;
-      const maxImages = Math.floor(pageWidth / imageWidth);
+  const handleSaveProperty = () => {
+    const userID = localStorage.getItem('id');
+    const propertyID = property.propertyID;
 
-      const newVisibleImages = expandImages
-        ? property.images
-        : property.images.slice(0, maxImages);
-      setVisibleImages(newVisibleImages);
-    };
-
-    updateVisibleImages();
-    window.addEventListener('resize', updateVisibleImages);
-
-    return () => {
-      window.removeEventListener('resize', updateVisibleImages);
-    };
-  }, [property.images, expandImages]);
-
-  const [newComment, setNewComment] = useState('');
-
-  const handleCommentChange = (event) => {
-    setNewComment(event.target.value);
-  };
-
-  const handleSubmitComment = () => {
-    if (newComment.trim() !== '') {
-      const currentDate = new Date().toISOString().slice(0, 10);
-      const formattedRating = '★'.repeat(newRating) + '☆'.repeat(5 - newRating);
-      const newPropertyComment = {
-        username: user?.email,
-        date: currentDate,
-        rating: formattedRating,
-        text: newComment,
-      };
-      setPropertyComments([...propertyComments, newPropertyComment]);
-      setNewComment('');
-      setNewRating(0);
+    if (isSaved) {
+      //property is already saved, so remove it
+      fetch('http://localhost:8080/removeListing', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `userID=${userID}&propertyID=${propertyID}`,
+      })
+        .then(response => response.text())
+        .then(data => {
+          console.log(data);
+          setIsSaved(false);
+        })
+        .catch(error => {
+          console.error('Error removing property:', error);
+        });
+    } else {
+      //property is not saved, so add it
+      fetch('http://localhost:8080/addListing', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `userID=${userID}&propertyID=${propertyID}`,
+      })
+        .then(response => response.text())
+        .then(data => {
+          console.log(data);
+          setIsSaved(true);
+        })
+        .catch(error => {
+          console.error('Error saving property:', error);
+        });
     }
   };
 
+  useEffect(() => {
+    const checkSavedStatus = async () => {
+      const userID = localStorage.getItem('id');
 
+      try {
+        const response = await fetch(`http://localhost:8080/getSavedListings?userID=${userID}`);
+        const data = await response.json();
+        const savedPropertyIDs = data.map(property => property.propertyID);
+        setIsSaved(savedPropertyIDs.includes(property.propertyID));
+      } catch (error) {
+        console.error('Error checking saved status:', error);
+      }
+    };
+
+    if (property) {
+      checkSavedStatus();
+    }
+  }, [property]);
 
   return (
     <div>
       <div className="navbar-div">
         <Navbar />
       </div>
-      <div className="individual-property">
-        <div className="property-header">
-          <h1>{property.name}</h1>
-          <button className="save-button" onClick={handleSaveProperty}>
-            {isSaved ? 'Unsave' : 'Save'}
-          </button>
-        </div>
-        <div className="property-images">
-          {visibleImages.map((image, index) => (
-            <img key={index} src={image.url} alt={`Property Image ${index + 1}`} />
-          ))}
-          {property.images.length > visibleImages.length && (
-            <button className="toggle-button" onClick={toggleImages}>
-              {expandImages ? 'Show Less' : 'Show More'}
-            </button>
-          )}
-        </div>
-        <div className="property-details">
-          <div className="property-info">
-            <h2>Trojan Apartments</h2>
-            <p>Price: {property.price}</p>
-            <p>Address: {property.address}</p>
-            <div className="property-specs">
-              <div className="property-spec">
-                <FontAwesomeIcon icon={faBed} style={{ color: "#990000", }} />
-                <p>{property.beds} Beds</p>
-              </div>
-              <div className="property-spec">
-                <FontAwesomeIcon icon={faBath} style={{ color: "#990000", }} />
-                <p>{property.baths} Baths</p>
-              </div>
-              <div className="property-spec">
-                <FontAwesomeIcon icon={faRulerCombined} style={{ color: "#990000", }} />
-                <p>{property.sqft} sqft</p>
-              </div>
-            </div>
-            <p>Details: {property.description}</p>
+      {property && (
+        <div className="individual-property">
+          <div className="property-header">
+            <h1>{property.name}</h1>
+            {user && (
+              <button className="save-button" onClick={handleSaveProperty}>
+                {isSaved ? 'Unsave' : 'Save'}
+              </button>
+            )}
           </div>
-          <div className="property-comments">
-            <h2>Comments</h2>
-            {propertyComments.map((comment, index) => (
-              <PropertyComment key={index} comment={comment} />
+          <div className="property-images">
+            {visibleImages.map((image, index) => (
+              <img key={index} src={image} alt={`Property Image ${index + 1}`} />
             ))}
-            <div className="add-comment">
-              <div className="rating-input">
-                {[...Array(5)].map((_, index) => (
-                  <span
-                    key={index}
-                    className={`star ${index < newRating ? 'selected' : ''}`}
-                    onClick={() => setNewRating(index + 1)}
-                  >
-                    ★
-                  </span>
-                ))}
+            <button className="toggle-button" onClick={toggleImages}>
+              {expandImages ? "Show Less" : "Show More"}
+            </button>
+          </div>
+
+
+          <div className="property-details">
+            <div className="property-info">
+              <h2>{property.name}</h2>
+              <p>Price: ${property.price}</p>
+              <p>Address: {property.address}</p>
+              <div className="property-specs">
+                <div className="property-spec">
+                  <FontAwesomeIcon icon={faBed} style={{ color: "#990000" }} />
+                  <p>{property.beds} Beds</p>
+                </div>
+                <div className="property-spec">
+                  <FontAwesomeIcon icon={faBath} style={{ color: "#990000" }} />
+                  <p>{property.baths} Baths</p>
+                </div>
               </div>
-              <textarea
-                placeholder="Add a comment..."
-                value={newComment}
-                onChange={handleCommentChange}
-              ></textarea>
-              <button onClick={handleSubmitComment}>Submit</button>
+              <p>{splitDescription(property.description)}</p>
+            </div>
+            <div className="property-comments">
+              <h2>Comments</h2>
+              <PropertyComment pid={property.propertyID} />
             </div>
           </div>
         </div>
-      </div >
-    </div>
+      )
+      }
+    </div >
   );
 };
 

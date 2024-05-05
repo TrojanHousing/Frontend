@@ -1,5 +1,4 @@
 /* IndividualProperty.css */
-.navbar-div {}
 
 .individual-property {
   max-width: 1200px;
@@ -40,6 +39,10 @@
   gap: 20px;
 }
 
+.property-details p {
+  font-size: 19px;
+}
+
 .property-info {
   margin-top: 20px;
 
@@ -70,6 +73,7 @@
 }
 
 
+
 .property-images {
   display: flex;
   flex-wrap: wrap;
@@ -83,6 +87,7 @@
   position: relative;
   border-radius: 10px;
   overflow: hidden;
+  transition: max-height 0.3s ease;
 }
 
 .property-images img {
@@ -94,6 +99,7 @@
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+
 }
 
 .property-images img:hover {
@@ -117,50 +123,4 @@
 
 .toggle-button:hover {
   background-color: #CC0000;
-}
-
-
-.add-comment {
-  margin-top: 20px;
-}
-
-.add-comment textarea {
-  width: 100%;
-  height: 100px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
-}
-
-.add-comment button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #990000;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.add-comment button:hover {
-  background-color: #CC0000;
-}
-
-.rating-input {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.rating-input .star {
-  font-size: 24px;
-  color: #ccc;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.rating-input .star.selected {
-  color: #FFD700;
 }
