@@ -41,7 +41,9 @@ const Comment = () => {
       const parts = commentString.split(',');
       const text = parts.find((part) => part.includes('"text":')).replace('"text":', '');
       const rating = parts.find((part) => part.includes('"rating":')).replace('"rating":', '');
-      return { text: text.replace(/"/g, ''), rating: parseInt(rating), address: "address"};
+      const address = parts.find((part) => part.includes('"address":')).replace('"address":', '');
+      const id = parts.find((part) => part.includes('"propertyID":')).replace('"propertyID":', '');
+      return { text: text.replace(/["{}]/g, ''), rating: parseInt(rating), address: address.replace(/["{}]/g, ''), id: parseInt(id)};
     });
   };
 
@@ -59,7 +61,7 @@ const Comment = () => {
           {comments.map((comment, index) => (
             <tr key={index}>
               <td>
-                <Link to={`/IndividualProperty`}>
+                <Link to={`/IndividualProperty/${comment.id}`}>
                   {comment.address}
                 </Link>
               </td>

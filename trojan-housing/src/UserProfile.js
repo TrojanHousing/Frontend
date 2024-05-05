@@ -27,7 +27,7 @@ function UserProfile() {
             <SavedProperties />
           </div>
           <div className="user-comments">
-            <h2>{user?.email}'s Property Ratings</h2>
+            <h2>{user?.email}'s Property Ratings/Comments</h2>
             <Comments />
           </div>
 
