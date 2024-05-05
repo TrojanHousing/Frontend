@@ -15,7 +15,6 @@ const IndividualProperty = () => {
   const [isSaved, setIsSaved] = useState(false);
   const [expandImages, setExpandImages] = useState(false);
   const [visibleImages, setVisibleImages] = useState([]);
-  const [allImages, setAllImages] = useState([]);
   const [newRating, setNewRating] = useState('');
   const [propertyComments, setPropertyComments] = useState([
     {
@@ -70,29 +69,27 @@ const IndividualProperty = () => {
     fetchProperties();
   }, [id]);
 
-  const fetchImages = async () => {
-    try {
-      const response = await fetch('http://localhost:8080/getImage', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `property_id=${property.propertyID}`,
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setAllImages(data);  // Store all images here
-        setVisibleImages(data.slice(0, 3));  // Initialize visibleImages with only the first few images
-      } else {
-        console.error('Error fetching images:', response.status);
-      }
-    } catch (error) {
-      console.error('Error fetching images:', error);
-    }
-  };
-
   useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/getImage', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: `property_id=${property.propertyID}`,
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setVisibleImages(data);
+        } else {
+          console.error('Error fetching images:', response.status);
+        }
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      }
+    };
 
     if (property) {
       fetchImages();
@@ -100,25 +97,36 @@ const IndividualProperty = () => {
   }, [property]);
 
   useEffect(() => {
-    if (!expandImages) {
-      setVisibleImages(allImages.slice(0, 3)); // Show only the first few images
-    } else {
-      setVisibleImages(allImages); // Show all images
+    if (property && property.images) {
+      const updateVisibleImages = () => {
+        const pageWidth = window.innerWidth;
+        const imageWidth = 430;
+        const imageHeight = 275;
+        const maxImages = Math.floor(pageWidth / imageWidth);
+
+        const newVisibleImages = expandImages
+          ? property.images
+          : property.images.slice(0, maxImages);
+        setVisibleImages(newVisibleImages);
+      };
+
+      updateVisibleImages();
+      window.addEventListener('resize', updateVisibleImages);
+
+      return () => {
+        window.removeEventListener('resize', updateVisibleImages);
+      };
     }
-  }, [expandImages, allImages]);
-
-
-  const toggleImages = () => {
-    setExpandImages(!expandImages);
-  };
-
+  }, [property, expandImages]);
 
   const handleSaveProperty = () => {
     // update isSaved state when the user clicks the "Save" button
     setIsSaved(!isSaved);
   };
 
-
+  const toggleImages = () => {
+    setExpandImages(!expandImages);
+  };
 
   const [newComment, setNewComment] = useState('');
 
@@ -159,12 +167,12 @@ const IndividualProperty = () => {
             {visibleImages.map((image, index) => (
               <img key={index} src={image} alt={`Property Image ${index + 1}`} />
             ))}
-            <button className="toggle-button" onClick={toggleImages}>
-              {expandImages ? "Show Less" : "Show More"}
-            </button>
+            {visibleImages.length > 0 && (
+              <button className="toggle-button" onClick={toggleImages}>
+                {expandImages ? 'Show Less' : 'Show More'}
+              </button>
+            )}
           </div>
-
-
 
 
           <div className="property-details">
