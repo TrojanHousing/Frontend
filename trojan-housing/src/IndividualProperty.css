@@ -40,6 +40,10 @@
   gap: 20px;
 }
 
+.property-details p {
+  font-size: 19px;
+}
+
 .property-info {
   margin-top: 20px;
 
@@ -70,6 +74,7 @@
 }
 
 
+
 .property-images {
   display: flex;
   flex-wrap: wrap;
@@ -83,6 +88,7 @@
   position: relative;
   border-radius: 10px;
   overflow: hidden;
+  transition: max-height 0.3s ease;
 }
 
 .property-images img {
@@ -94,6 +100,7 @@
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+
 }
 
 .property-images img:hover {
@@ -122,6 +129,10 @@
 
 .add-comment {
   margin-top: 20px;
+}
+
+textarea {
+  font-size: 18px;
 }
 
 .add-comment textarea {
