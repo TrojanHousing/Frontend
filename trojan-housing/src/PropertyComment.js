@@ -49,25 +49,25 @@ const PropertyComment = ({ pid }) => {
     setNewComment(event.target.value);
   };
 
-  const handleSubmitComment = async () => {
+  const handleSubmitComment = async (event) => {
+    event.preventDefault(); 
     if (newComment.trim() !== '') {
-      //const formattedRating = '★'.repeat(newRating) + '☆'.repeat(5 - newRating);
-      const formattedRating = 0;
-
       const requestBody = {
         propertyID: pid,
-        userID: localStorage.getItem('uid'),
+        userID: localStorage.getItem('id'),
         text: newComment,
-        rating: formattedRating
+        rating: newRating,
       };
 
+      console.log("request"+JSON.stringify(requestBody));
+
       try {
-        const response = await fetch('http://localhost:8080/addComment', {
+        const response = fetch('http://localhost:8080/addComment', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: JSON.stringify(requestBody),
+          body: `propertyID=${requestBody.propertyID}&userID=${requestBody.userID}&text=${requestBody.text}&rating=${requestBody.rating}`,
         });
 
         if (response.ok) {
@@ -80,6 +80,7 @@ const PropertyComment = ({ pid }) => {
       }
       setNewComment('');
       setNewRating(0);
+      
     }
   };
 
