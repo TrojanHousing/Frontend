@@ -162,9 +162,11 @@ const IndividualProperty = () => {
         <div className="individual-property">
           <div className="property-header">
             <h1>{property.name}</h1>
-            <button className="save-button" onClick={handleSaveProperty}>
-              {isSaved ? 'Unsave' : 'Save'}
-            </button>
+            {user && (
+              <button className="save-button" onClick={handleSaveProperty}>
+                {isSaved ? 'Unsave' : 'Save'}
+              </button>
+            )}
           </div>
           <div className="property-images">
             {visibleImages.map((image, index) => (
@@ -200,25 +202,27 @@ const IndividualProperty = () => {
               {propertyComments.map((comment, index) => (
                 <PropertyComment key={index} comment={comment} />
               ))}
-              <div className="add-comment">
-                <div className="rating-input">
-                  {[...Array(5)].map((_, index) => (
-                    <span
-                      key={index}
-                      className={`star ${index < newRating ? 'selected' : ''}`}
-                      onClick={() => setNewRating(index + 1)}
-                    >
-                      ★
-                    </span>
-                  ))}
+              {user && (
+                <div className="add-comment">
+                  <div className="rating-input">
+                    {[...Array(5)].map((_, index) => (
+                      <span
+                        key={index}
+                        className={`star ${index < newRating ? 'selected' : ''}`}
+                        onClick={() => setNewRating(index + 1)}
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                  <textarea
+                    placeholder="Add a comment..."
+                    value={newComment}
+                    onChange={handleCommentChange}
+                  ></textarea>
+                  <button onClick={handleSubmitComment}>Submit</button>
                 </div>
-                <textarea
-                  placeholder="Add a comment..."
-                  value={newComment}
-                  onChange={handleCommentChange}
-                ></textarea>
-                <button onClick={handleSubmitComment}>Submit</button>
-              </div>
+              )}
             </div>
           </div>
         </div>
