@@ -29,6 +29,9 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
         localStorage.removeItem('user');
         localStorage.removeItem('id');
+        if (window.location.href === 'http://localhost:3000/UserProfile') {
+            window.location.replace('http://localhost:3000/');
+          }
     };
 
     return (
