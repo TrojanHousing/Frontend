@@ -103,22 +103,61 @@ const IndividualProperty = () => {
     const userID = localStorage.getItem('id');
     const propertyID = property.propertyID;
 
-    fetch('http://localhost:8080/addListing', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: `userID=${userID}&propertyID=${propertyID}`,
-    })
-      .then(response => response.text())
-      .then(data => {
-        console.log(data);
-        setIsSaved(!isSaved);
+    if (isSaved) {
+      //property is already saved, so remove it
+      fetch('http://localhost:8080/removeListing', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `userID=${userID}&propertyID=${propertyID}`,
       })
-      .catch(error => {
-        console.error('Error saving property:', error);
-      });
+        .then(response => response.text())
+        .then(data => {
+          console.log(data);
+          setIsSaved(false);
+        })
+        .catch(error => {
+          console.error('Error removing property:', error);
+        });
+    } else {
+      //property is not saved, so add it
+      fetch('http://localhost:8080/addListing', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `userID=${userID}&propertyID=${propertyID}`,
+      })
+        .then(response => response.text())
+        .then(data => {
+          console.log(data);
+          setIsSaved(true);
+        })
+        .catch(error => {
+          console.error('Error saving property:', error);
+        });
+    }
   };
+
+  useEffect(() => {
+    const checkSavedStatus = async () => {
+      const userID = localStorage.getItem('id');
+
+      try {
+        const response = await fetch(`http://localhost:8080/getSavedListings?userID=${userID}`);
+        const data = await response.json();
+        const savedPropertyIDs = data.map(property => property.propertyID);
+        setIsSaved(savedPropertyIDs.includes(property.propertyID));
+      } catch (error) {
+        console.error('Error checking saved status:', error);
+      }
+    };
+
+    if (property) {
+      checkSavedStatus();
+    }
+  }, [property]);
 
   return (
     <div>
