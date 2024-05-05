@@ -113,10 +113,7 @@ const IndividualProperty = () => {
   };
 
 
-  const handleSaveProperty = () => {
-    // update isSaved state when the user clicks the "Save" button
-    setIsSaved(!isSaved);
-  };
+
 
 
   const splitDescription = (description) => {
@@ -125,6 +122,27 @@ const IndividualProperty = () => {
         • {sentence.trim()}.<br /><br />
       </React.Fragment>
     ));
+  };
+
+  const handleSaveProperty = () => {
+    const userID = localStorage.getItem('id');
+    const propertyID = property.propertyID;
+
+    fetch('http://localhost:8080/addListing', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `userID=${userID}&propertyID=${propertyID}`,
+    })
+      .then(response => response.text())
+      .then(data => {
+        console.log(data);
+        setIsSaved(!isSaved);
+      })
+      .catch(error => {
+        console.error('Error saving property:', error);
+      });
   };
 
 
@@ -183,7 +201,7 @@ const IndividualProperty = () => {
           <div className="property-details">
             <div className="property-info">
               <h2>{property.name}</h2>
-              <p>Price: {property.price}</p>
+              <p>Price: ${property.price}</p>
               <p>Address: {property.address}</p>
               <div className="property-specs">
                 <div className="property-spec">
