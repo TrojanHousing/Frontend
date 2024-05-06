@@ -55,12 +55,14 @@ function FilterPanel({ onFilterChange }) {
                 <option value="6000">$6,000 max</option>
                 <option value="8000">$8,000 max</option>
                 <option value="10000">$10,000 max</option>
+                <option value="15000">$15,000 max</option>
             </select>
             <select name="distance" onChange={handleFilterChange} className="filter-select">
                 <option value="">Distance from USC</option>
+                <option value="0.5">0.5 miles</option>
                 <option value="1">1 mile</option>
-                <option value="5">5 miles</option>
-                <option value="10">10 miles</option>
+                <option value="1.5">1.5 miles</option>
+                <option value="2">2 miles</option>
             </select>
             <div className="filter-actions">
                 <button onClick={resetFilters} className="filter-button">Clear Filters</button>
