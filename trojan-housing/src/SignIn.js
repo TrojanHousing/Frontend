@@ -55,6 +55,9 @@ const SignIn = () => {
   
         if (response.ok) {
           signIn(formData.email, formData.password);
+          //const data = await response.text(); 
+          console.log("userid="+errorText);
+          localStorage.setItem('id',errorText);
           navigate('/');
         } else {
           switch (errorText) {
