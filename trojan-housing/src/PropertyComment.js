@@ -68,7 +68,7 @@ const PropertyComment = ({ pid }) => {
       console.log("request" + JSON.stringify(requestBody));
 
       try {
-        const response = fetch('http://localhost:8080/addComment', {
+        const response = await fetch('http://localhost:8080/addComment', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -77,16 +77,20 @@ const PropertyComment = ({ pid }) => {
         });
 
         if (response.ok) {
-          fetchComments();
+          // Update the propertyComments state with the new comment
+          setPropertyComments([
+            ...propertyComments,
+            { text: newComment, rating: newRating },
+          ]);
+
+          setNewComment('');
+          setNewRating(0);
         } else {
           console.error('Comment was not added successfully. Status:', response.status);
         }
       } catch (error) {
         console.error('Error adding comment:', error);
       }
-      setNewComment('');
-      setNewRating(0);
-
     }
   };
 
