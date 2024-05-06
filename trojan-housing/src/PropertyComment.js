@@ -29,6 +29,12 @@ const PropertyComment = ({ pid }) => {
     fetchComments();
   }, []);
 
+  const renderStars = (rating) => {
+    const filledStars = '★'.repeat(rating);
+    const emptyStars = '☆'.repeat(5 - rating);
+    return filledStars + emptyStars;
+  };
+
   // Function to parse the comments string and return an array of comments objects
   const parseComments = (commentsString) => {
     if (!commentsString || commentsString === '[]') {
@@ -50,7 +56,7 @@ const PropertyComment = ({ pid }) => {
   };
 
   const handleSubmitComment = async (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
     if (newComment.trim() !== '') {
       const requestBody = {
         propertyID: pid,
@@ -59,7 +65,7 @@ const PropertyComment = ({ pid }) => {
         rating: newRating,
       };
 
-      console.log("request"+JSON.stringify(requestBody));
+      console.log("request" + JSON.stringify(requestBody));
 
       try {
         const response = fetch('http://localhost:8080/addComment', {
@@ -80,15 +86,17 @@ const PropertyComment = ({ pid }) => {
       }
       setNewComment('');
       setNewRating(0);
-      
+
     }
   };
 
   return (
     <div className="property-comment">
       {propertyComments.map((comment, index) => (
-        <div key={index} className="comment">
-          <div className="comment-rating">{comment.rating}</div>
+        <div key={index} className="comment-box">
+          <div className="comment-header">
+            <div className="comment-rating">{renderStars(comment.rating)}</div>
+          </div>
           <div className="comment-text">{comment.text}</div>
         </div>
       ))}

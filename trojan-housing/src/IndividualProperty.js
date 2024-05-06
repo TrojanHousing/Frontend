@@ -91,6 +91,7 @@ const IndividualProperty = () => {
     setExpandImages(!expandImages);
   };
 
+  //split description based on periods to make readable
   const splitDescription = (description) => {
     return description.split('.').map((sentence, index) => (
       <React.Fragment key={index}>
